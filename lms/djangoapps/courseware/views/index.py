@@ -66,7 +66,7 @@ class CoursewareIndex(View):
     """
     View class for the Courseware page.
     """
-    @method_decorator(login_required)
+    # @method_decorator(login_required)
     @method_decorator(ensure_csrf_cookie)
     @method_decorator(cache_control(no_cache=True, no_store=True, must_revalidate=True))
     @method_decorator(ensure_valid_course_key)
@@ -108,7 +108,7 @@ class CoursewareIndex(View):
                 self.course = get_course_with_access(
                     request.user, 'load', self.course_key,
                     depth=CONTENT_DEPTH,
-                    check_if_enrolled=True,
+                    check_if_enrolled=False,
                 )
                 self.is_staff = has_access(request.user, 'staff', self.course)
                 self._setup_masquerade_for_effective_user()
@@ -186,15 +186,20 @@ class CoursewareIndex(View):
         """
         Redirect to dashboard if the course is blocked due to non-payment.
         """
-        self.real_user = User.objects.prefetch_related("groups").get(id=self.real_user.id)
-        redeemed_registration_codes = CourseRegistrationCode.objects.filter(
-            course_id=self.course_key,
-            registrationcoderedemption__redeemed_by=self.real_user
-        )
+        redeemed_registration_codes = []
+
+        if not self.request.user.is_anonymous:
+            self.real_user = User.objects.prefetch_related("groups").get(id=self.real_user.id)
+            redeemed_registration_codes = CourseRegistrationCode.objects.filter(
+                course_id=self.course_key,
+                registrationcoderedemption__redeemed_by=self.real_user
+            )
+
         if is_course_blocked(self.request, redeemed_registration_codes, self.course_key):
             # registration codes may be generated via Bulk Purchase Scenario
             # we have to check only for the invoice generated registration codes
             # that their invoice is valid or not
+            # TODO Update message to account for the fact that the user is not authenticated.
             log.warning(
                 u'User %s cannot access the course %s because payment has not yet been received',
                 self.real_user,
@@ -218,9 +223,11 @@ class CoursewareIndex(View):
         """
         Returns the preferred language for the actual user making the request.
         """
-        language_preference = get_user_preference(self.real_user, LANGUAGE_KEY)
-        if not language_preference:
-            language_preference = settings.LANGUAGE_CODE
+        language_preference = settings.LANGUAGE_CODE
+
+        if not self.request.user.is_anonymous:
+            language_preference = get_user_preference(self.real_user, LANGUAGE_KEY)
+
         return language_preference
 
     def _is_masquerading_as_student(self):

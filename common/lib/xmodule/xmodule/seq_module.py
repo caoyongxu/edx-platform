@@ -342,7 +342,8 @@ class SequenceModule(SequenceFields, ProctoringFields, XModule):
         the given display_items.
         """
         bookmarks_service = self.runtime.service(self, "bookmarks")
-        context["username"] = self.runtime.service(self, "user").get_current_user().opt_attrs['edx-platform.username']
+        context["username"] = self.runtime.service(self, "user").get_current_user().opt_attrs.get(
+            'edx-platform.username')
         display_names = [
             self.get_parent().display_name_with_default,
             self.display_name_with_default
