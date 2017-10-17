@@ -22,6 +22,7 @@ from course_modes.models import CourseMode
 from lms.djangoapps.certificates import api as certificate_api
 from lms.djangoapps.commerce.utils import EcommerceService
 from lms.djangoapps.courseware.access import has_access
+from lms.djangoapps.grades.course_grade_factory import CourseGradeFactory
 from openedx.core.djangoapps.catalog.utils import get_programs
 from openedx.core.djangoapps.commerce.utils import ecommerce_api_client
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
@@ -88,6 +89,8 @@ class ProgramProgressMeter(object):
             self.enrolled_run_modes[enrollment_id] = mode
             # We can't use dict.keys() for this because the course run ids need to be ordered
             self.course_run_ids.append(enrollment_id)
+
+        self.course_grade_factory = CourseGradeFactory()
 
         if uuid:
             self.programs = [get_programs(self.site, uuid=uuid)]
@@ -323,9 +326,11 @@ class ProgramProgressMeter(object):
             if certificate_type == CourseMode.NO_ID_PROFESSIONAL_MODE:
                 certificate_type = CourseMode.PROFESSIONAL
 
+            course_grade = self.course_grade_factory.read(self.user, certificate['course_key'])
             course_data = {
                 'course_run_id': unicode(certificate['course_key']),
-                'type': certificate_type
+                'type': certificate_type,
+                'grade': course_grade.percent,
             }
 
             if certificate_api.is_passing_status(certificate['status']):
