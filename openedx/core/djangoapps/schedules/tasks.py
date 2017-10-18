@@ -67,10 +67,11 @@ def _recurring_nudge_schedule_send(site_id, msg_str):
     ace.send(msg)
 
 
-class ScheduleRecurringNudge(Task):
-    ignore_result=True
-    routing_key=ROUTING_KEY
+class ScheduleMessageBaseTask(Task):
+    ignore_result = True
+    routing_key = ROUTING_KEY
 
+class ScheduleRecurringNudge(ScheduleMessageBaseTask):
     def run(
         self, site_id, target_day_str, day_offset, bin_num, org_list, exclude_orgs=False, override_recipient_email=None,
     ):
@@ -86,10 +87,7 @@ class ScheduleRecurringNudge(Task):
         )
 
 
-class ScheduleUpgradeReminder(Task):
-    ignore_result=True
-    routing_key=ROUTING_KEY
-
+class ScheduleUpgradeReminder(ScheduleMessageBaseTask):
     def run(
         self, site_id, target_day_str, day_offset, bin_num, org_list, exclude_orgs=False, override_recipient_email=None,
     ):
@@ -114,10 +112,7 @@ def _upgrade_reminder_schedule_send(site_id, msg_str):
     ace.send(msg)
 
 
-class ScheduleCourseUpdate(Task):
-    ignore_result=True
-    routing_key=ROUTING_KEY
-
+class ScheduleCourseUpdate(ScheduleMessageBaseTask):
     def run(
         self, site_id, target_day_str, day_offset, bin_num, org_list, exclude_orgs=False, override_recipient_email=None,
     ):
