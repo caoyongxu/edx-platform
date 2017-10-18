@@ -218,7 +218,7 @@ def get_course_run_details(course_run_key, fields):
         course_run_key: key for the course_run about which we are retrieving information
 
     Returns:
-        dict with language, start date, end date, and max_effort details about specified course run
+        dict with language, weeks_to_complete, and max_effort details about specified course run
     """
     catalog_integration = CatalogIntegration.current()
     course_run_details = dict()
@@ -235,6 +235,8 @@ def get_course_run_details(course_run_key, fields):
         api = create_catalog_api_client(user)
 
         cache_key = '{base}.course_runs'.format(base=catalog_integration.CACHE_KEY)
+        for field in fields:
+            cache_key += '.{field}'.format(field=field)
 
         course_run_details = get_edx_api_data(catalog_integration, 'course_runs', api, resource_id=course_run_key,
                                               cache_key=cache_key, many=False, traverse_pagination=False, fields=fields)
