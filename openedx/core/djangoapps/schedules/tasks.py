@@ -155,7 +155,7 @@ class ScheduleRecurringNudge(ScheduleMessageBaseTask):
     def run(
         self, site_id, target_day_str, day_offset, bin_num, org_list, exclude_orgs=False, override_recipient_email=None,
     ):
-        return resolvers.recurring_nudge_schedule_bin(
+        return resolvers.ScheduleStartResolver().recurring_nudge_schedule_bin(
             _recurring_nudge_schedule_send,
             site_id,
             target_day_str,
@@ -176,7 +176,7 @@ class ScheduleUpgradeReminder(ScheduleMessageBaseTask):
     def run(
         self, site_id, target_day_str, day_offset, bin_num, org_list, exclude_orgs=False, override_recipient_email=None,
     ):
-        return resolvers.upgrade_reminder_schedule_bin(
+        return resolvers.UpgradeReminderResolver().upgrade_reminder_schedule_bin(
             _upgrade_reminder_schedule_send,
             site_id,
             target_day_str,
@@ -205,7 +205,7 @@ class ScheduleCourseUpdate(ScheduleMessageBaseTask):
     def run(
         self, site_id, target_day_str, day_offset, bin_num, org_list, exclude_orgs=False, override_recipient_email=None,
     ):
-        return resolvers.course_update_schedule_bin(
+        return resolvers.CourseUpdateResolver().course_update_schedule_bin(
             _course_update_schedule_send,
             site_id,
             target_day_str,
