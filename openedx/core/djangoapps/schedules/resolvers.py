@@ -4,6 +4,7 @@ import logging
 
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.contrib.sites.models import Site
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.core.urlresolvers import reverse
 from django.db.models import F, Min, Q
@@ -11,12 +12,14 @@ from django.utils.formats import dateformat, get_format
 
 
 from edx_ace.recipient_resolver import RecipientResolver
-from edx_ace.utils.date import serialize
+from edx_ace.recipient import Recipient
+from edx_ace.utils.date import serialize, deserialize
 
 from courseware.date_summary import verified_upgrade_deadline_link, verified_upgrade_link_is_valid
 from openedx.core.djangoapps.schedules.config import COURSE_UPDATE_WAFFLE_FLAG
 from openedx.core.djangoapps.schedules.exceptions import CourseUpdateDoesNotExist
 from openedx.core.djangoapps.schedules.models import Schedule, ScheduleConfig
+from openedx.core.djangoapps.schedules.message_type import ScheduleMessageType
 from openedx.core.djangoapps.schedules.utils import PrefixedDebugLoggerMixin
 from openedx.core.djangoapps.schedules.template_context import (
     absolute_url,
@@ -176,6 +179,12 @@ def get_schedules_with_target_date_by_bin_and_orgs(schedule_date_field, current_
     return schedules
 
 
+class RecurringNudge(ScheduleMessageType):
+    def __init__(self, day, *args, **kwargs):
+        super(RecurringNudge, self).__init__(*args, **kwargs)
+        self.name = "recurringnudge_day{}".format(day)
+
+
 class ScheduleStartResolver(BinnedSchedulesBaseResolver):
     """
     Send a message to all users whose schedule started at ``self.current_date`` + ``day_offset``.
@@ -186,6 +195,34 @@ class ScheduleStartResolver(BinnedSchedulesBaseResolver):
     def __init__(self, *args, **kwargs):
         super(ScheduleStartResolver, self).__init__(*args, **kwargs)
         self.log_prefix = 'Scheduled Nudge'
+
+
+def recurring_nudge_schedule_bin(
+    async_send_task, site_id, target_day_str, day_offset, bin_num, org_list, exclude_orgs=False, override_recipient_email=None,
+):
+    target_datetime = deserialize(target_day_str)
+    # TODO: in the next refactor of this task, pass in current_datetime instead of reproducing it here
+    current_datetime = target_datetime - datetime.timedelta(days=day_offset)
+    msg_type = RecurringNudge(abs(day_offset))
+
+    for (user, language, context) in _recurring_nudge_schedules_for_bin(
+        Site.objects.get(id=site_id),
+        current_datetime,
+        target_datetime,
+        bin_num,
+        org_list,
+        exclude_orgs
+    ):
+        msg = msg_type.personalize(
+            Recipient(
+                user.username,
+                override_recipient_email or user.email,
+            ),
+            language,
+            context,
+        )
+        async_send_task.apply_async(
+            (site_id, str(msg)), retry=False)
 
 
 def _recurring_nudge_schedules_for_bin(site, current_datetime, target_datetime, bin_num, org_list, exclude_orgs=False):
@@ -232,6 +269,9 @@ def _get_datetime_beginning_of_day(dt):
     return dt.replace(hour=0, minute=0, second=0, microsecond=0)
 
 
+class UpgradeReminder(ScheduleMessageType):
+    pass
+
 class UpgradeReminderResolver(BinnedSchedulesBaseResolver):
     """
     Send a message to all users whose verified upgrade deadline is at ``self.current_date`` + ``day_offset``.
@@ -242,6 +282,34 @@ class UpgradeReminderResolver(BinnedSchedulesBaseResolver):
     def __init__(self, *args, **kwargs):
         super(UpgradeReminderResolver, self).__init__(*args, **kwargs)
         self.log_prefix = 'Upgrade Reminder'
+
+
+def upgrade_reminder_schedule_bin(
+    async_send_task, site_id, target_day_str, day_offset, bin_num, org_list, exclude_orgs=False, override_recipient_email=None,
+):
+    target_datetime = deserialize(target_day_str)
+    # TODO: in the next refactor of this task, pass in current_datetime instead of reproducing it here
+    current_datetime = target_datetime - datetime.timedelta(days=day_offset)
+    msg_type = UpgradeReminder()
+
+    for (user, language, context) in _upgrade_reminder_schedules_for_bin(
+        Site.objects.get(id=site_id),
+        current_datetime,
+        target_datetime,
+        bin_num,
+        org_list,
+        exclude_orgs
+    ):
+        msg = msg_type.personalize(
+            Recipient(
+                user.username,
+                override_recipient_email or user.email,
+            ),
+            language,
+            context,
+        )
+        async_send_task.apply_async(
+            (site_id, str(msg)), retry=False)
 
 
 def _upgrade_reminder_schedules_for_bin(site, current_datetime, target_datetime, bin_num, org_list, exclude_orgs=False):
@@ -317,6 +385,10 @@ def _get_link_to_purchase_verified_certificate(a_user, a_schedule):
     return verified_upgrade_deadline_link(a_user, enrollment.course)
 
 
+class CourseUpdate(ScheduleMessageType):
+    pass
+
+
 class CourseUpdateResolver(BinnedSchedulesBaseResolver):
     """
     Send a message to all users whose schedule started at ``self.current_date`` + ``day_offset`` and the
@@ -328,6 +400,35 @@ class CourseUpdateResolver(BinnedSchedulesBaseResolver):
     def __init__(self, *args, **kwargs):
         super(CourseUpdateResolver, self).__init__(*args, **kwargs)
         self.log_prefix = 'Course Update'
+
+
+def course_update_schedule_bin(
+    async_send_task, site_id, target_day_str, day_offset, bin_num, org_list, exclude_orgs=False, override_recipient_email=None,
+):
+    target_datetime = deserialize(target_day_str)
+    # TODO: in the next refactor of this task, pass in current_datetime instead of reproducing it here
+    current_datetime = target_datetime - datetime.timedelta(days=day_offset)
+    msg_type = CourseUpdate()
+
+    for (user, language, context) in _course_update_schedules_for_bin(
+        Site.objects.get(id=site_id),
+        current_datetime,
+        target_datetime,
+        day_offset,
+        bin_num,
+        org_list,
+        exclude_orgs
+    ):
+        msg = msg_type.personalize(
+            Recipient(
+                user.username,
+                override_recipient_email or user.email,
+            ),
+            language,
+            context,
+        )
+        async_send_task.apply_async(
+            (site_id, str(msg)), retry=False)
 
 
 def _course_update_schedules_for_bin(site, current_datetime, target_datetime, day_offset, bin_num, org_list,

@@ -55,12 +55,6 @@ def update_course_schedules(self, **kwargs):
         raise self.retry(kwargs=kwargs, exc=exc)
 
 
-class RecurringNudge(ScheduleMessageType):
-    def __init__(self, day, *args, **kwargs):
-        super(RecurringNudge, self).__init__(*args, **kwargs)
-        self.name = "recurringnudge_day{}".format(day)
-
-
 @task(ignore_result=True, routing_key=ROUTING_KEY)
 def _recurring_nudge_schedule_send(site_id, msg_str):
     site = Site.objects.get(pk=site_id)
@@ -77,61 +71,32 @@ def _recurring_nudge_schedule_send(site_id, msg_str):
 def recurring_nudge_schedule_bin(
     site_id, target_day_str, day_offset, bin_num, org_list, exclude_orgs=False, override_recipient_email=None,
 ):
-    target_datetime = deserialize(target_day_str)
-    # TODO: in the next refactor of this task, pass in current_datetime instead of reproducing it here
-    current_datetime = target_datetime - datetime.timedelta(days=day_offset)
-    msg_type = RecurringNudge(abs(day_offset))
-
-    for (user, language, context) in resolvers._recurring_nudge_schedules_for_bin(
-        Site.objects.get(id=site_id),
-        current_datetime,
-        target_datetime,
+    return resolvers.recurring_nudge_schedule_bin(
+        _recurring_nudge_schedule_send,
+        site_id,
+        target_day_str,
+        day_offset,
         bin_num,
         org_list,
-        exclude_orgs
-    ):
-        msg = msg_type.personalize(
-            Recipient(
-                user.username,
-                override_recipient_email or user.email,
-            ),
-            language,
-            context,
-        )
-        _recurring_nudge_schedule_send.apply_async((site_id, str(msg)), retry=False)
-
-
-class UpgradeReminder(ScheduleMessageType):
-    pass
+        exclude_orgs=exclude_orgs,
+        override_recipient_email=override_recipient_email,
+    )
 
 
 @task(ignore_result=True, routing_key=ROUTING_KEY)
 def upgrade_reminder_schedule_bin(
     site_id, target_day_str, day_offset, bin_num, org_list, exclude_orgs=False, override_recipient_email=None,
 ):
-    target_datetime = deserialize(target_day_str)
-    # TODO: in the next refactor of this task, pass in current_datetime instead of reproducing it here
-    current_datetime = target_datetime - datetime.timedelta(days=day_offset)
-    msg_type = UpgradeReminder()
-
-    for (user, language, context) in resolvers._upgrade_reminder_schedules_for_bin(
-        Site.objects.get(id=site_id),
-        current_datetime,
-        target_datetime,
+    return resolvers.upgrade_reminder_schedule_bin(
+        _upgrade_reminder_schedule_send,
+        site_id,
+        target_day_str,
+        day_offset,
         bin_num,
         org_list,
-        exclude_orgs
-    ):
-        msg = msg_type.personalize(
-            Recipient(
-                user.username,
-                override_recipient_email or user.email,
-            ),
-            language,
-            context,
-        )
-        _upgrade_reminder_schedule_send.apply_async((site_id, str(msg)), retry=False)
-
+        exclude_orgs=exclude_orgs,
+        override_recipient_email=override_recipient_email,
+    )
 
 @task(ignore_result=True, routing_key=ROUTING_KEY)
 def _upgrade_reminder_schedule_send(site_id, msg_str):
@@ -142,38 +107,21 @@ def _upgrade_reminder_schedule_send(site_id, msg_str):
     msg = Message.from_string(msg_str)
     ace.send(msg)
 
-class CourseUpdate(ScheduleMessageType):
-    pass
-
 
 @task(ignore_result=True, routing_key=ROUTING_KEY)
 def course_update_schedule_bin(
     site_id, target_day_str, day_offset, bin_num, org_list, exclude_orgs=False, override_recipient_email=None,
 ):
-    target_datetime = deserialize(target_day_str)
-    # TODO: in the next refactor of this task, pass in current_datetime instead of reproducing it here
-    current_datetime = target_datetime - datetime.timedelta(days=day_offset)
-    msg_type = CourseUpdate()
-
-    for (user, language, context) in resolvers._course_update_schedules_for_bin(
-        Site.objects.get(id=site_id),
-        current_datetime,
-        target_datetime,
+    return resolvers.course_update_schedule_bin(
+        _course_update_schedule_send,
+        site_id,
+        target_day_str,
         day_offset,
         bin_num,
         org_list,
-        exclude_orgs
-    ):
-        msg = msg_type.personalize(
-            Recipient(
-                user.username,
-                override_recipient_email or user.email,
-            ),
-            language,
-            context,
-        )
-        _course_update_schedule_send.apply_async((site_id, str(msg)), retry=False)
-
+        exclude_orgs=exclude_orgs,
+        override_recipient_email=override_recipient_email,
+    )
 
 @task(ignore_result=True, routing_key=ROUTING_KEY)
 def _course_update_schedule_send(site_id, msg_str):
