@@ -93,7 +93,7 @@ class TestUpgradeReminder(FilteredQueryCountMixin, CacheIsolationTestCase):
 
     @ddt.data(1, 10, 100)
     @patch.object(tasks, 'ace')
-    @patch.object(tasks, '_upgrade_reminder_schedule_send')
+    @patch.object(tasks.ScheduleUpgradeReminder, 'async_send_task')
     def test_schedule_bin(self, schedule_count, mock_schedule_send, mock_ace):
         schedules = [
             ScheduleFactory.create(
@@ -121,7 +121,7 @@ class TestUpgradeReminder(FilteredQueryCountMixin, CacheIsolationTestCase):
         self.assertEqual(mock_schedule_send.apply_async.call_count, schedule_count)
         self.assertFalse(mock_ace.send.called)
 
-    @patch.object(tasks, '_upgrade_reminder_schedule_send')
+    @patch.object(tasks.ScheduleUpgradeReminder, 'async_send_task')
     def test_no_course_overview(self, mock_schedule_send):
 
         schedule = ScheduleFactory.create(
@@ -171,7 +171,7 @@ class TestUpgradeReminder(FilteredQueryCountMixin, CacheIsolationTestCase):
         self.assertFalse(mock_ace.send.called)
 
     @patch.object(tasks, 'ace')
-    @patch.object(tasks, '_upgrade_reminder_schedule_send')
+    @patch.object(tasks.ScheduleUpgradeReminder, 'async_send_task')
     @ddt.data(
         ((['filtered_org'], False, 1)),
         ((['filtered_org'], True, 2))
@@ -219,7 +219,7 @@ class TestUpgradeReminder(FilteredQueryCountMixin, CacheIsolationTestCase):
         self.assertFalse(mock_ace.send.called)
 
     @patch.object(tasks, 'ace')
-    @patch.object(tasks, '_upgrade_reminder_schedule_send')
+    @patch.object(tasks.ScheduleUpgradeReminder, 'async_send_task')
     def test_multiple_enrollments(self, mock_schedule_send, mock_ace):
         user = UserFactory.create()
         schedules = [
@@ -282,7 +282,7 @@ class TestUpgradeReminder(FilteredQueryCountMixin, CacheIsolationTestCase):
         sent_messages = []
 
         with self.settings(TEMPLATES=self._get_template_overrides()):
-            with patch.object(tasks, '_upgrade_reminder_schedule_send') as mock_schedule_send:
+            with patch.object(tasks.ScheduleUpgradeReminder, 'async_send_task') as mock_schedule_send:
                 mock_schedule_send.apply_async = lambda args, *_a, **_kw: sent_messages.append(args)
 
                 # we execute one query per course to see if it's opted out of dynamic upgrade deadlines, however,
