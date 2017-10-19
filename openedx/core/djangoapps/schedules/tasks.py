@@ -140,6 +140,7 @@ class ScheduleMessageBaseTask(Task):
     def run(
         self, site_id, target_day_str, day_offset, bin_num, org_list, exclude_orgs=False, override_recipient_email=None,
     ):
+        msg_type = self.make_message_type(day_offset)
         return self.resolver(
             self.async_send_task,
             Site.objects.get(id=site_id),
@@ -149,7 +150,10 @@ class ScheduleMessageBaseTask(Task):
             org_list,
             exclude_orgs=exclude_orgs,
             override_recipient_email=override_recipient_email,
-        ).schedule_bin()
+        ).schedule_bin(msg_type)
+
+    def make_message_type(self, day_offset):
+        raise NotImplementedError()
 
 
 @task(ignore_result=True, routing_key=ROUTING_KEY)
@@ -172,6 +176,9 @@ class ScheduleRecurringNudge(ScheduleMessageBaseTask):
     resolver = resolvers.ScheduleStartResolver
     async_send_task = _recurring_nudge_schedule_send
 
+    def make_message_type(self, day_offset):
+        return resolvers.RecurringNudge(abs(day_offset))
+
 
 @task(ignore_result=True, routing_key=ROUTING_KEY)
 def _upgrade_reminder_schedule_send(site_id, msg_str):
@@ -190,6 +197,9 @@ class ScheduleUpgradeReminder(ScheduleMessageBaseTask):
     resolver = resolvers.UpgradeReminderResolver
     async_send_task = _upgrade_reminder_schedule_send
 
+    def make_message_type(self, day_offset):
+        return resolvers.UpgradeReminder()
+
 
 @task(ignore_result=True, routing_key=ROUTING_KEY)
 def _course_update_schedule_send(site_id, msg_str):
@@ -207,3 +217,6 @@ class ScheduleCourseUpdate(ScheduleMessageBaseTask):
     log_prefix = 'Course Update'
     resolver = resolvers.CourseUpdateResolver
     async_send_task = _course_update_schedule_send
+
+    def make_message_type(self, day_offset):
+        return resolvers.CourseUpdate()
