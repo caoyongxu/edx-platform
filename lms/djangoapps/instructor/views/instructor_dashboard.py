@@ -49,7 +49,7 @@ from openedx.core.lib.url_utils import quote_slashes
 from openedx.core.lib.xblock_utils import wrap_xblock
 from shoppingcart.models import Coupon, CourseRegCodeItem, PaidCourseRegistration
 from student.models import CourseEnrollment
-from student.roles import CourseFinanceAdminRole, CourseSalesAdminRole
+from student.roles import CourseFinanceAdminRole, CourseSalesAdminRole, CourseStaffRole, CourseInstructorRole
 from util.json_request import JsonResponse
 from xmodule.html_module import HtmlDescriptor
 from xmodule.modulestore.django import modulestore
@@ -177,8 +177,12 @@ def instructor_dashboard_2(request, course_id):
     # NOTE: For now, if we only have procotred exams enabled, then only platform Staff
     # (user.is_staff) will be able to view the special exams tab. This may
     # change in the future
+    user_has_access = any([request.user.is_staff,
+         CourseStaffRole(course_key).has_user(request.user),
+         CourseInstructorRole(course_key).has_user(request.user)]
+    )
     can_see_special_exams = (
-        ((course.enable_proctored_exams and request.user.is_staff) or course.enable_timed_exams) and
+        ((course.enable_proctored_exams and user_has_access) or course.enable_timed_exams) and
         settings.FEATURES.get('ENABLE_SPECIAL_EXAMS', False)
     )
     if can_see_special_exams:
