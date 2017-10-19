@@ -86,7 +86,7 @@ from openedx.core.djangoapps.theming import helpers as theming_helpers
 from openedx.core.djangoapps.user_api.preferences import api as preferences_api
 from openedx.core.djangolib.markup import HTML
 from openedx.features.course_experience import course_home_url_name
-from openedx.features.enterprise_support.api import get_dashboard_consent_notification
+from openedx.features.enterprise_support.api import consent_needed_for_course, enterprise_customer_for_request, get_dashboard_consent_notification
 from shoppingcart.api import order_history
 from shoppingcart.models import CourseRegistrationCode, DonationConfiguration
 from student.cookies import delete_logged_in_cookies, set_logged_in_cookies, set_user_info_cookie
@@ -714,6 +714,18 @@ def dashboard(request):
         )
 
     enterprise_message = get_dashboard_consent_notification(request, user, course_enrollments)
+    consent_required_courses = frozenset(
+        enrollment.course_id for enrollment in course_enrollments
+        if consent_needed_for_course(request, request.user, str(enrollment.course_id), True)
+    )
+    print('consent_required_courses', consent_required_courses)
+
+    if len(consent_required_courses) > 0:
+        enterprise_customer = enterprise_customer_for_request(request)
+        enterprise_customer_name = enterprise_customer['name']
+    else:
+        enterprise_customer_name = None
+    print('enterprise_customer_name', enterprise_customer_name)
 
     # Account activation message
     account_activation_messages = [
@@ -833,6 +845,8 @@ def dashboard(request):
 
     context = {
         'enterprise_message': enterprise_message,
+        'consent_required_courses': consent_required_courses,
+        'enterprise_customer_name': enterprise_customer_name,
         'enrollment_message': enrollment_message,
         'redirect_message': redirect_message,
         'account_activation_messages': account_activation_messages,

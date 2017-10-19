@@ -1,4 +1,4 @@
-<%page args="course_overview, enrollment, show_courseware_link, cert_status, can_unenroll, credit_status, show_email_settings, course_mode_info, is_paid_course, is_course_blocked, verification_status, course_requirements, dashboard_index, share_settings, related_programs, display_course_modes_on_dashboard" expression_filter="h"/>
+<%page args="course_overview, enrollment, show_courseware_link, cert_status, can_unenroll, credit_status, show_email_settings, course_mode_info, is_paid_course, is_course_blocked, verification_status, course_requirements, dashboard_index, share_settings, related_programs, display_course_modes_on_dashboard, show_consent_link, enterprise_customer_name" expression_filter="h"/>
 
 <%!
 import urllib
@@ -363,6 +363,28 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
                     <span class="wrapper-copy">
                       <span class="copy" id="upgrade-to-verified">${_("Upgrade to Verified")}</span>
                         <span class="sr">&nbsp;${_(course_overview.display_name_with_default)}</span>
+                    </span>
+                  </a>
+                </div>
+            </div>
+          </div>
+        %endif
+
+        % if show_consent_link:
+          <div class="message message-upsell has-actions is-shown">
+            <div class="wrapper-extended">
+                <p class="message-copy" align="justify">
+                  <b class="message-copy-bold">
+                    ${_("Consent to share your data")}
+                  </b><br>
+                    ${_("To access this course, you must first consent to share your learning achievements with {enterprise_customer_name}.").format(enterprise_customer_name=enterprise_customer_name)}
+                </p>
+                <div class="action-upgrade-container">
+                  <a class="action action-upgrade" href="${course_target}" data-course-key="${enrollment.course_id}">
+                    <span class="action-upgrade-icon" aria-hidden="true"></span>
+                    <span class="wrapper-copy">
+                      <span class="copy" id="view-consent">${_("View Consent")}</span>
+                      <span class="sr">&nbsp;${_(course_overview.display_name_with_default)}</span>
                     </span>
                   </a>
                 </div>
