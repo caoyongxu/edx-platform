@@ -16,13 +16,13 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='CourseEntitlement',
             fields=[
-                ('parent_course_uuid', models.UUIDField(serialize=False, primary_key=True)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('course_uuid', models.UUIDField()),
                 ('created', models.DateTimeField(auto_now_add=True, db_index=True)),
                 ('updated', models.DateTimeField(auto_now=True)),
-                ('expiration', models.DateTimeField()),
+                ('expired_at', models.DateTimeField(null=True)),
                 ('mode', models.CharField(default=b'audit', max_length=100)),
-                ('is_active', models.BooleanField(default=1)),
-                ('enrollment_course', models.ForeignKey(to='student.CourseEnrollment', null=True)),
+                ('enrollment_course_run', models.ForeignKey(to='student.CourseEnrollment', null=True)),
                 ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
         ),

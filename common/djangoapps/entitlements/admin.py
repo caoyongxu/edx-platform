@@ -4,5 +4,10 @@ from .models import CourseEntitlement
 
 @admin.register(CourseEntitlement)
 class EntitlementAdmin(admin.ModelAdmin):
-    list_display = ('user', 'parent_course_uuid', 'expiration',
-                    'mode', 'enrollment_course', 'is_active')
+    list_display = ('user',
+                    'course_uuid',
+                    'created',
+                    'updated',
+                    'expired_at',
+                    'mode',
+                    'enrollment_course_run')
