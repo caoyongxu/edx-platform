@@ -169,6 +169,12 @@ def _recurring_nudge_schedule_send(site_id, msg_str):
     ace.send(msg)
 
 
+class RecurringNudge(ScheduleMessageType):
+    def __init__(self, day, *args, **kwargs):
+        super(RecurringNudge, self).__init__(*args, **kwargs)
+        self.name = "recurringnudge_day{}".format(day)
+
+
 class ScheduleRecurringNudge(ScheduleMessageBaseTask):
     num_bins = resolvers.RECURRING_NUDGE_NUM_BINS
     enqueue_config_var = 'enqueue_recurring_nudge'
@@ -177,7 +183,7 @@ class ScheduleRecurringNudge(ScheduleMessageBaseTask):
     async_send_task = _recurring_nudge_schedule_send
 
     def make_message_type(self, day_offset):
-        return resolvers.RecurringNudge(abs(day_offset))
+        return RecurringNudge(abs(day_offset))
 
 
 @task(ignore_result=True, routing_key=ROUTING_KEY)
@@ -190,6 +196,10 @@ def _upgrade_reminder_schedule_send(site_id, msg_str):
     ace.send(msg)
 
 
+class UpgradeReminder(ScheduleMessageType):
+    pass
+
+
 class ScheduleUpgradeReminder(ScheduleMessageBaseTask):
     num_bins = resolvers.UPGRADE_REMINDER_NUM_BINS
     enqueue_config_var = 'enqueue_upgrade_reminder'
@@ -198,7 +208,7 @@ class ScheduleUpgradeReminder(ScheduleMessageBaseTask):
     async_send_task = _upgrade_reminder_schedule_send
 
     def make_message_type(self, day_offset):
-        return resolvers.UpgradeReminder()
+        return UpgradeReminder()
 
 
 @task(ignore_result=True, routing_key=ROUTING_KEY)
@@ -211,6 +221,10 @@ def _course_update_schedule_send(site_id, msg_str):
     ace.send(msg)
 
 
+class CourseUpdate(ScheduleMessageType):
+    pass
+
+
 class ScheduleCourseUpdate(ScheduleMessageBaseTask):
     num_bins = resolvers.COURSE_UPDATE_NUM_BINS
     enqueue_config_var = 'enqueue_course_update'
@@ -219,4 +233,4 @@ class ScheduleCourseUpdate(ScheduleMessageBaseTask):
     async_send_task = _course_update_schedule_send
 
     def make_message_type(self, day_offset):
-        return resolvers.CourseUpdate()
+        return CourseUpdate()
