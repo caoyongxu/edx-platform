@@ -22,7 +22,7 @@
     }
 
     &.prominent + li {
-      @include border-left(1px solid $lms-border-color);
+      @include border-left(1px solid $border-color);
       @include padding-left($baseline*0.75);
     }
 
@@ -41,8 +41,8 @@
 
       &:hover,
       &:focus {
-        color: $lms-active-color;
-        border-bottom-color: $lms-active-color;
+        color: theme-color("primary");
+        border-bottom-color: theme-color("primary");
       }
 
       &.active {
@@ -90,7 +90,7 @@
     // STATE: hover and focus
     &:hover,
     &:focus {
-      color: $lms-label-color;
+      color: $body-color;
       border-width: 0;
     }
   }

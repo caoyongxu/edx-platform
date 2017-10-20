@@ -1089,15 +1089,15 @@ div.problem {
     line-height: $base-line-height;
 
     &.success {
-      @include notification-by-type($success-color);
+      @include notification-by-type($success);
     }
 
     &.error {
-      @include notification-by-type($error-color);
+      @include notification-by-type($danger);
     }
 
     &.warning {
-      @include notification-by-type($warning-color);
+      @include notification-by-type($warning);
     }
 
     &.general {
@@ -1263,7 +1263,6 @@ div.problem {
         @extend %t-strong;
 
         color: #aaa;
-        text-transform: uppercase;
         font-style: normal;
         font-size: 0.9em;
       }
@@ -1563,7 +1562,6 @@ div.problem {
 
         display: block;
         content: "debug input value";
-        text-transform: uppercase;
         font-size: 1.5em;
       }
     }

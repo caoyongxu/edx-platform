@@ -59,7 +59,7 @@ div.book-wrapper {
           @include clearfix();
 
           padding: 0;
-          color: $uxpl-blue-base;
+          color: theme-color("primary");
 
           &:hover, &:focus {
             background-color: transparent;

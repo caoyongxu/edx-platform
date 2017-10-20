@@ -195,7 +195,6 @@
     .card-type {
       @extend %t-copy-sub2;
 
-      text-transform: uppercase;
       color: $gray;
     }
 
@@ -339,8 +338,7 @@
 
         box-shadow: 1px 1px 1px 0 $blue-d1;
         background-color: $m-blue-l2;
-        padding: ($baseline/10) ($baseline*.75);
-        text-transform: uppercase;
+        padding: ($baseline/10) ($baseline*0.75);
         color: $white;
       }
     }

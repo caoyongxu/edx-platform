@@ -10,7 +10,7 @@ label {
   -webkit-font-smoothing: antialiased;
 
   &.register-emails {
-    font-family: $sans-serif;
+    font-family: $font-family-sans-serif;
     font-style: normal;
     font-size: 12px;
     line-height: 1.5em;
@@ -58,19 +58,21 @@ textarea {
 
 input[type="submit"],
 input[type="button"],
-button,.button {
+button,
+.button {
   border-radius: 3px;
 
   @include button(shiny, $button-color);
 
-  font: normal 1.2rem/1.6rem $sans-serif;
+  font: normal 1.2rem/1.6rem $font-family-sans-serif;
   letter-spacing: 1px;
   padding: 4px 20px;
-  text-transform: uppercase;
   vertical-align: top;
   -webkit-font-smoothing: antialiased;
 
-  &:disabled, &.is-disabled, &.disabled {
+  &:disabled,
+  &.is-disabled,
+  &.disabled {
     pointer-events: none;
     opacity: 0.5;
     cursor: not-allowed;

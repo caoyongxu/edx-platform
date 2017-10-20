@@ -20,11 +20,11 @@
     margin: 0 auto;
 
     p, ol, ul {
-      font-family: $sans-serif;
+      font-family: $font-family-sans-serif;
 
       // override needed for poorly scoped font-family styling on p a:link {}
       a {
-        font-family: $sans-serif;
+        font-family: $font-family-sans-serif;
       }
     }
 

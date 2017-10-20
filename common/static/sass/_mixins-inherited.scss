@@ -186,9 +186,9 @@
   @include button;
   @include linear-gradient(top, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
 
-  border: 1px solid $uxpl-blue-base;
+  border: 1px solid theme-color("primary");
   border-radius: 3px;
-  background-color: $uxpl-blue-base;
+  background-color: theme-color("primary");
   color: $white;
 
   &:hover, &:focus, &:active {

@@ -40,7 +40,7 @@
     }
 
     &:hover {
-      background-color: $lms-active-color;
+      background-color: theme-color("primary");
       background-image: none;
       border-radius: 3px;
       color: $white;

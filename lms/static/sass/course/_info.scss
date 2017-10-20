@@ -2,7 +2,6 @@
 // Upgrade
 
 $notification-highlight-border-color:      $uxpl-green-base !default;
-$lms-border-color:                         $uxpl-gray-background !default;
 $notification-background:                  rgb(255, 255, 255) !default
 
 .home {
@@ -63,7 +62,7 @@ div.info-wrapper {
       // This banner uses the Pattern Library's defined variables
       @include border-left(0px);
 
-      border: 1px solid $lms-border-color;
+      border: 1px solid $border-color;
       width: 100%;
       display: table;
 

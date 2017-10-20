@@ -43,19 +43,17 @@ $lms-max-width: 1180px !default;
 // ----------------------------
 $transparent: rgba(0, 0, 0, 0) !default; // used when color value is needed for UI width/transitions but element is transparent
 
-$black:     rgb(0, 0, 0) !default;
 $black-t0:  rgba($black, 0.125) !default;
 $black-t1:  rgba($black, 0.25) !default;
 $black-t2:  rgba($black, 0.5) !default;
 $black-t3:  rgba($black, 0.75) !default;
 
-$white:     rgb(255, 255, 255) !default;
 $white-t0:  rgba($white, 0.125) !default;
 $white-t1:  rgba($white, 0.25) !default;
 $white-t2:  rgba($white, 0.5) !default;
 $white-t3:  rgba($white, 0.75) !default;
 
-$gray:      rgb(118, 118, 118) !default;
+$gray:      $gray-600 !default;
 $gray-l1:   tint($gray, 20%) !default;
 $gray-l2:   tint($gray, 40%) !default;
 $gray-l3:   tint($gray, 60%) !default;
@@ -68,9 +66,6 @@ $gray-d2:   shade($gray, 40%) !default;
 $gray-d3:   shade($gray, 60%) !default;
 $gray-d4:   shade($gray, 80%) !default;
 
-$yellow: rgb(255, 252, 221) !default;
-
-$pink: rgb(182, 37, 103) !default;
 $pink-l1: tint($pink, 20%) !default;
 $pink-l2: tint($pink, 40%) !default;
 $pink-l3: tint($pink, 60%) !default;
@@ -87,7 +82,6 @@ $pink-u1: desaturate($pink, 15%) !default;
 $pink-u2: desaturate($pink, 30%) !default;
 $pink-u3: desaturate($pink, 45%) !default;
 
-$red: rgb(178, 6, 16) !default;
 $red-l1: tint($red, 20%) !default;
 $red-l2: tint($red, 40%) !default;
 $red-l3: tint($red, 60%) !default;
@@ -104,7 +98,6 @@ $red-u1: desaturate($red, 15%) !default;
 $red-u2: desaturate($red, 30%) !default;
 $red-u3: desaturate($red, 45%) !default;
 
-$green: rgb(37, 184, 90) !default;
 $green-l1: tint($green, 20%) !default;
 $green-l2: tint($green, 40%) !default;
 $green-l3: tint($green, 60%) !default;
@@ -121,8 +114,6 @@ $green-u1: desaturate($green, 15%) !default;
 $green-u2: desaturate($green, 30%) !default;
 $green-u3: desaturate($green, 45%) !default;
 
-$yellow: rgb(255, 252, 221) !default;      // yellow color used by LMS
-//$yellow: rgb(237, 189, 60) !default;     // yellow color used by Studio
 $yellow-l1: tint($yellow, 20%) !default;
 $yellow-l2: tint($yellow, 40%) !default;
 $yellow-l3: tint($yellow, 60%) !default;
@@ -139,7 +130,6 @@ $yellow-u1: desaturate($yellow, 15%) !default;
 $yellow-u2: desaturate($yellow, 30%) !default;
 $yellow-u3: desaturate($yellow, 45%) !default;
 
-$blue: rgb(0, 121, 188) !default;
 $blue-l1: tint($blue, 20%) !default;
 $blue-l2: tint($blue, 40%) !default;
 $blue-l3: tint($blue, 60%) !default;
@@ -160,7 +150,6 @@ $blue-t1: rgba($blue, 0.25) !default;
 $blue-t2: rgba($blue, 0.5) !default;
 $blue-t3: rgba($blue, 0.75) !default;
 
-$uxpl-blue-base: rgb(0, 117, 180) !default; // wcag2a compliant
 $uxpl-blue-hover-active: rgb(6, 86, 131) !default; // wcag2a compliant
 
 $uxpl-green-base: rgb(0, 129, 0) !default; // wcag2a compliant
@@ -217,7 +206,6 @@ $confirm-color: rgb(0, 132, 1) !default;
 $active-color: $blue !default;
 $highlight-color: rgb(255, 255, 0) !default;
 $alert-color: rgb(212, 64, 64) !default;
-$success-color: rgb(0, 155, 0) !default;
 $success-color-hover: rgb(0, 129, 0) !default;
 
 // ----------------------------
@@ -246,7 +234,7 @@ $state-danger-border: darken($state-danger-bg, 5%) !default;
 
 // logo colors
 $audit-mode-color: rgb(74, 74, 74) !default;
-$honor-mode-color: $uxpl-blue-base !default;
+$honor-mode-color: theme-color("primary") !default;
 $verified-mode-color: $uxpl-green-base !default;
 $micromasters-color: #005585 !default;
 $xseries-color: #424242 !default;
@@ -284,7 +272,7 @@ $m-gray-t1: rgba($m-gray, 0.25) !default;
 $m-gray-t2: rgba($m-gray, 0.5) !default;
 $m-gray-t3: rgba($m-gray, 0.75) !default;
 
-$m-blue: $uxpl-blue-base;  // uxpl blue base
+$m-blue: theme-color("primary");  // uxpl blue base
 $m-blue-l1: rgb(43, 172, 230) !default;
 $m-blue-l2: rgb(66, 181, 233) !default;
 $m-blue-l3: rgb(89, 190, 236) !default;
@@ -356,19 +344,14 @@ $credit-color-base: rgb(244, 195, 0) !default; // accessible with black text
 // edx-specific: Studio/Staff actions
 $staff-color: $uxpl-pink-base !default;
 
-
-
 // ----------------------------
 // #TYPOGRAPHY
 // ----------------------------
-$sans-serif: 'Open Sans', $verdana, sans-serif !default;
 $monospace: Monaco, 'Bitstream Vera Sans Mono', 'Lucida Console', monospace !default;
-$body-font-family: $sans-serif !default;
 $serif: $georgia !default;
 
 // newer variables/standards
 $f-serif: 'Bree Serif', Georgia, Cambria, 'Times New Roman', Times, serif !default;
-$f-sans-serif: 'Open Sans','Helvetica Neue', Helvetica, Arial, sans-serif !default;
 $f-monospace: 'Bitstream Vera Sans Mono', Consolas, Courier, monospace !default;
 
 $font-light: 300 !default;
@@ -378,10 +361,6 @@ $font-bold: 700 !default;
 
 $m-base-font-size: em(15) !default;
 $support-form-base-font-size: 16px;
-// ----------------------------
-// #DEPTH
-// ----------------------------
-
 
 // ----------------------------
 // #TIMING
@@ -398,7 +377,7 @@ $tmg-f3: 0.125s !default;
 // ----------------------------
 // #FORMS
 // ----------------------------
-$form-bg-color: $white !default;
+$form-bg-color: theme-color("inverse") !default;
 
 // ----------------------------
 // #APPLICATIONS
@@ -408,7 +387,7 @@ $body-font-size: em(14) !default;
 $body-line-height: golden-ratio(0.875em, 1) !default;
 
 // font colors
-$base-font-color: rgb(60, 60, 60) !default;
+$base-font-color: $gray-400 !default;
 $baseFontColor: $base-font-color !default;
 $darkest-base-font-color: $black !default;
 $lighter-base-font-color: rgb(100, 100, 100) !default;
@@ -474,11 +453,9 @@ $action-secondary-disabled-bg: $m-gray-d3 !default;
 $action-secondary-disabled-fg: $white !default;
 
 // actions - misc
-$link-color: $uxpl-blue-base !default;
-$link-color-d1: $link-color !default;
 $link-hover: $uxpl-blue-hover-active !default; // from our Pattern Library http://ux.edx.org/elements/colors/
 $site-status-color: $pink !default;
-$button-color: $uxpl-blue-base !default;
+$button-color: theme-color("primary") !default;
 $button-archive-color: rgb(238, 238, 238) !default; // #eeeeee
 
 // larger, random elements
@@ -514,7 +491,7 @@ $courseware-footer-margin: 0 !default;
 $courseware-border-bottom-color: rgb(68, 162, 222) !default;
 $courseware-button-border-color: rgb(230, 230, 230) !default;
 $courseware-hover-color: rgb(51, 52, 53) !default;
-$courseware-navigation-color: $uxpl-blue-base !default;
+$courseware-navigation-color: theme-color("primary") !default;
 
 // homepage, onboarding, and course discovery
 $homepage__header--gradient__color--alpha: lighten($gray, 15%) !default;

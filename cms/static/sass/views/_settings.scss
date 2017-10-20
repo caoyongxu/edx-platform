@@ -238,7 +238,7 @@
           margin: 0 0 ($baseline/4) 0;
 
           &.is-focused {
-            color: $uxpl-blue-base;
+            color: theme-color("primary");
           }
         }
 
@@ -423,7 +423,7 @@
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
-            color: $uxpl-blue-base;
+            color: theme-color("primary");
 
             &:hover {
               color: $uxpl-blue-hover-active;

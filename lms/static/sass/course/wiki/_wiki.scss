@@ -105,7 +105,7 @@
       border: 1px solid #c8c8c8;
       border-radius: 14px;
       box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12) inset;
-      font-family: $sans-serif;
+      font-family: $font-family-sans-serif;
       font-size: 12px;
 
       @include transition(border-color .1s linear 0s);
@@ -184,7 +184,6 @@
       margin: 20px 0 10px;
       font-size: 0.8em;
       font-weight: bold;
-      text-transform: uppercase;
     }
 
     h6 {
@@ -192,7 +191,6 @@
       font-size: 0.8em;
       font-weight: bold;
       color: #999;
-      text-transform: uppercase;
     }
 
     ul {
@@ -251,7 +249,6 @@
       .label {
         font-size: 0.7em;
         color: $uxpl-gray-base;
-        text-transform: uppercase;
       }
 
       .date {
@@ -331,16 +328,15 @@
   -----------------*/
 
   label {
-    font-family: $sans-serif;
+    font-family: $font-family-sans-serif;
     font-size: 0.9em;
     font-weight: bold;
     font-style: normal;
-    text-transform: uppercase;
     color: $uxpl-gray-base;
   }
 
   input {
-    font-family: $sans-serif;
+    font-family: $font-family-sans-serif;
     font-style: normal;
     font-weight: normal;
   }
@@ -393,7 +389,7 @@
       position: absolute;
       top: 10px;
       left: 7px;
-      font-family: $sans-serif;
+      font-family: $font-family-sans-serif;
       font-size: 0.75em;
       color: $uxpl-gray-base;
       pointer-events: none;
@@ -420,7 +416,7 @@
   }
 
   button {
-    font-family: $sans-serif;
+    font-family: $font-family-sans-serif;
   }
 
   .btn {
@@ -650,7 +646,7 @@
     }
 
     th {
-      font-family: $sans-serif;
+      font-family: $font-family-sans-serif;
       font-size: 0.7em;
     }
 

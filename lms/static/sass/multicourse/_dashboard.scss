@@ -186,7 +186,7 @@
           }
 
           &.is-approved .icon {
-            color: $success-color;
+            color: theme-color("success");
           }
 
           &.is-denied .icon {
@@ -256,7 +256,7 @@
     @include box-sizing(border-box);
 
     color: $white;
-    font-family: $sans-serif;
+    font-family: $font-family-sans-serif;
     display: inline-block;
     letter-spacing: 1px;
     margin-top: ($baseline/4);
@@ -665,7 +665,7 @@
         }
 
         a {
-          font-family: $sans-serif;
+          font-family: $font-family-sans-serif;
         }
 
         strong {
@@ -894,7 +894,7 @@
                 @include float(left);
 
                 border-radius: 3px;
-                font: normal 0.8rem/1.2rem $sans-serif;
+                font: normal 0.8rem/1.2rem $font-family-sans-serif;
                 letter-spacing: 1px;
                 padding: 6px 12px;
                 text-align: center;
@@ -913,7 +913,7 @@
               .btn {
                 @include float(left);
 
-                font: normal 0.8rem/1.2rem $sans-serif;
+                font: normal 0.8rem/1.2rem $font-family-sans-serif;
                 letter-spacing: 1px;
                 padding: 6px 12px;
                 text-align: center;
@@ -922,11 +922,11 @@
           }
 
           .exam-registration-number {
-            font-family: $sans-serif;
+            font-family: $font-family-sans-serif;
             font-size: 18px;
 
             a {
-              font-family: $sans-serif;
+              font-family: $font-family-sans-serif;
             }
           }
 
@@ -1116,7 +1116,7 @@
           @include clearfix;
 
           .tip {
-            font-family: $sans-serif;
+            font-family: $font-family-sans-serif;
             font-size: 1em;
             color: $lighter-base-font-color;
             margin-top: ($baseline/2);
@@ -1417,7 +1417,7 @@ p.course-block {
   @include float(left);
 
   display: block;
-  font: normal 15px/1.6rem $sans-serif;
+  font: normal 15px/1.6rem $font-family-sans-serif;
   letter-spacing: 0;
   padding: 6px 32px 7px;
   text-align: center;
@@ -1431,7 +1431,7 @@ p.course-block {
   &.archived {
     @include button(simple, $button-archive-color);
 
-    font: normal 15px/1.6rem $sans-serif;
+    font: normal 15px/1.6rem $font-family-sans-serif;
     padding: 6px 32px 7px;
 
     &:hover, &:focus {
@@ -1464,7 +1464,7 @@ a.fade-cover {
     .msg {
       @include clearfix();
 
-      font-family: $sans-serif;
+      font-family: $font-family-sans-serif;
       padding-bottom: $baseline;
       border-bottom: thin solid $gray;
 
@@ -1472,7 +1472,7 @@ a.fade-cover {
         @extend %t-title5;
         @extend %t-weight4;
 
-        font-family: $f-sans-serif;
+        font-family: $font-family-sans-serif;
 
         // Overriding Platform h2 styles
         text-transform: none;

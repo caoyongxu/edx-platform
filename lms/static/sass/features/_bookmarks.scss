@@ -16,7 +16,7 @@ $bookmarked-icon: "\f02e"; // .fa-bookmark
     @include padding(0, $baseline, ($baseline/4), $baseline);
 
     display: block;
-    border: 1px solid $lms-border-color;
+    border: 1px solid $border-color;
     margin-bottom: $baseline;
 
     &:hover {
@@ -73,7 +73,7 @@ $bookmarked-icon: "\f02e"; // .fa-bookmark
 // Rules for empty bookmarks list
 .bookmarks-empty {
   margin-top: $baseline;
-  border: 1px solid $lms-border-color;
+  border: 1px solid $border-color;
   padding: $baseline;
   background-color: $white;
 }

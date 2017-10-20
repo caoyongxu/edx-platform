@@ -106,7 +106,6 @@
     .left-floater {
       @include float(left);
 
-      text-transform: uppercase;
       font-weight: $font-semibold;
       color: $white;
       line-height: $body-line-height;

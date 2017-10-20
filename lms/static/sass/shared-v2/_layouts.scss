@@ -7,14 +7,14 @@
   .page-content-container {
     @include clearfix();
 
-    border: 1px solid $lms-border-color;
+    border: 1px solid $border-color;
     background-color: $lms-container-background-color;
   }
 
   .page-header {
     @include clearfix();
 
-    border-bottom: 1px solid $lms-border-color;
+    border-bottom: 1px solid $border-color;
     padding: $baseline;
 
     .page-title {

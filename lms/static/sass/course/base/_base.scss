@@ -42,7 +42,7 @@ body {
 body, h1, h2, h3, h4, h5, h6, p, label {
   @include text-align(left);
 
-  font-family: $sans-serif;
+  font-family: $font-family-sans-serif;
 }
 
 // we want to hide the outline on the focusable <main> element
@@ -92,7 +92,7 @@ input[type="password"] {
 
   @include box-sizing(border-box);
 
-  font: normal 1em $sans-serif;
+  font: normal 1em $font-family-sans-serif;
   height: 35px;
   padding: ($baseline/4) 12px;
   vertical-align: top;

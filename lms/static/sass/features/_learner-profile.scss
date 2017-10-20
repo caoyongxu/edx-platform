@@ -401,7 +401,7 @@
           }
 
           .u-field-value-readonly {
-            font-family: $sans-serif;
+            font-family: $font-family-sans-serif;
             color: $darkest-base-font-color;
           }
 
@@ -470,7 +470,7 @@
     @include float(left);
     @include padding-left($baseline);
 
-    font-family: $sans-serif;
+    font-family: $font-family-sans-serif;
     flex-grow: 1;
 
     @media (max-width: $learner-profile-container-flex) { // Switch to map-get($grid-breakpoints,md) for bootstrap
@@ -512,7 +512,7 @@
       margin-bottom: ($baseline/4);
       color: $gray-d3;
       width: 100%;
-      font: $font-semibold 1.4em/1.4em $sans-serif;
+      font: $font-semibold 1.4em/1.4em $font-family-sans-serif;
     }
 
     .u-field-value {

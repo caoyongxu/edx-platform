@@ -41,7 +41,6 @@ $transparent: rgba(0, 0, 0, 0) !default; // used when color value is needed for 
 
 // +Colors - UXPL new pattern library colors
 // ====================
-$uxpl-blue-base: rgb(0, 117, 180) !default; // wcag2a compliant
 $uxpl-blue-hover-active: rgb(6, 86, 131) !default; // wcag2a compliant
 $uxpl-light-blue-base: rgb(242, 248, 251) !default;
 
@@ -276,7 +275,6 @@ $error-red: rgb(253, 87, 87) !default;
 $sidebar-color: rgb(246, 246, 246) !default;
 
 // type
-$sans-serif: $f-sans-serif;
 $body-line-height: golden-ratio(0.875em, 1);
 
 // carried over from LMS for xmodules

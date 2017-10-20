@@ -3,6 +3,15 @@
 @import 'vendor/bi-app/bi-app-rtl'; // set the layout for right to left languages
 @import 'base/variables-rtl';
 
+// edX Bootstrap theme and variables support
+@import 'bootstrap/theme';
+@import 'bootstrap/variables';
+
+// Core Bootstrap functions, variables and mixins
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins/breakpoints';
+
 // base - utilities
 @import 'base/reset';
 @import 'base/variables';

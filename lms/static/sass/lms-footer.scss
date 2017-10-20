@@ -5,6 +5,15 @@
 @import 'bourbon/bourbon'; // lib - bourbon
 @import 'vendor/bi-app/bi-app-ltr'; // set the layout for left to right languages
 
+// edX Bootstrap theme and variables support
+@import 'bootstrap/theme';
+@import 'bootstrap/variables';
+
+// Core Bootstrap functions, variables and mixins
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins/breakpoints';
+
 // base - utilities
 @import 'base/variables';
 @import 'base/mixins';

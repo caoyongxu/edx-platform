@@ -1,7 +1,16 @@
 // ------------------------------
 // Learner Dashboard: Shared Build Compile
-// Uses the Pattern Library
 
+// edX Bootstrap theme and variables support
+@import 'bootstrap/theme';
+@import 'bootstrap/variables';
+
+// Core Bootstrap functions, variables and mixins
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins/breakpoints';
+
+// Pattern Library
 @import 'elements/banners';
 @import 'elements/course-card';
 @import 'elements/program-card';

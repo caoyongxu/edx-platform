@@ -196,7 +196,7 @@ $facet-background-color: #007db8;
 
         h1 {
           color: $base-font-color;
-          font-family: $sans-serif;
+          font-family: $font-family-sans-serif;
           font-style: italic;
           font-weight: 700;
           letter-spacing: 0;
@@ -397,7 +397,6 @@ $facet-background-color: #007db8;
       width: auto;
       color: $blue-d1; // WCAG 2.0 AA requirements
       text-align: center;
-      text-transform: uppercase;
 
       &:hover,
       &:focus {
@@ -572,7 +571,6 @@ $facet-background-color: #007db8;
 
         padding: ($baseline/4) ($baseline/2);
         color: $facet-background-color;
-        text-transform: uppercase;
       }
     }
   }

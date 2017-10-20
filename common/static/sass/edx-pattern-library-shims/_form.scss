@@ -17,7 +17,7 @@
   }
 
   .field-input:checked + .field-input-label {
-    color: $uxpl-blue-base;
+    color: theme-color("primary");
   }
 
 }

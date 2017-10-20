@@ -194,7 +194,7 @@
       }
 
       .heading {
-        font-family: "Open Sans";
+        font-family: $font-family-sans-serif;
         font-weight: bold;
         color: palette(primary, dark);
         font-size: 0.9375em;
@@ -251,9 +251,8 @@
   }
 
   .course-list-heading {
-    font-family: "Open Sans";
+    font-family: $font-family-sans-serif;
     font-weight: bold;
-    text-transform: uppercase;
     color: palette(primary, dark);
     font-size: 0.9375em;
     line-height: normal;
@@ -302,7 +301,7 @@
     flex-direction: column;
 
     .program-heading-title {
-      font-family: "Open Sans";
+      font-family: $font-family-sans-serif;
       font-weight: 600;
       font-size: 1.3em;
       color: palette(grayscale, base);
@@ -373,7 +372,7 @@
     .select-choice {
       @include margin-right(2px);
 
-      font-family: "Open Sans";
+      font-family: $font-family-sans-serif;
       font-weight: bold;
       font-size: 0.9375em;
       color: palette(grayscale, base);
@@ -546,7 +545,7 @@
         }
 
         .card-msg {
-          font-family: "Open Sans";
+          font-family: $font-family-sans-serif;
           font-weight: bold;
           font-size: 0.9375em;
           color: palette(grayscale, base);
@@ -571,7 +570,7 @@
       }
 
       .card-msg {
-        font-family: "Open Sans";
+        font-family: $font-family-sans-serif;
         font-weight: bold;
         font-size: 0.9375em;
         color: palette(grayscale, base);

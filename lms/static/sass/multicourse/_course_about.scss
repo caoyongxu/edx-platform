@@ -88,7 +88,7 @@
 
             a {
               color: $base-font-color;
-              font: italic 700 1em/1em $sans-serif;
+              font: italic 700 1em/1em $font-family-sans-serif;
               letter-spacing: 0;
               text-shadow: 0 1px rgba(255,255,255, 0.6);
               text-transform: none;
@@ -114,10 +114,9 @@
 
             border-radius: 3px;
             display: block;
-            font: normal 1.2rem/1.6rem $sans-serif;
+            font: normal 1.2rem/1.6rem $font-family-sans-serif;
             letter-spacing: 1px;
             padding: ($baseline/2) 0;
-            text-transform: uppercase;
             text-align: center;
             width: flex-grid(6);
 
@@ -145,10 +144,9 @@
 
             @include float(left);
 
-            font: normal 1.2rem/1.6rem $sans-serif;
+            font: normal 1.2rem/1.6rem $font-family-sans-serif;
             letter-spacing: 1px;
             padding: ($baseline/2) 0;
-            text-transform: uppercase;
             text-align: center;
             width: flex-grid(3, 8);
 
@@ -167,7 +165,6 @@
             display: block;
             letter-spacing: 1px;
             padding: 10px 0 8px;
-            text-transform: uppercase;
             text-align: center;
 
             @include float(left);
@@ -227,7 +224,7 @@
               color: rgba(255,255,255, 0.8);
               content: "\25B6";
               display: block;
-              font: normal 2em/1em $sans-serif;
+              font: normal 2em/1em $font-family-sans-serif;
 
               @include left(50%);
               @include margin-left(-11px);
@@ -283,7 +280,6 @@
 
         @include text-align(right);
 
-        text-transform: uppercase;
         color: $staff-color;
 
         &:hover {
@@ -327,7 +323,7 @@
 
           h3 {
             color: $base-font-color;
-            font-family: $sans-serif;
+            font-family: $font-family-sans-serif;
             font-weight: 700;
             margin-bottom: ($baseline*0.75);
             text-transform: none;
@@ -377,7 +373,7 @@
           margin-bottom: ($baseline*2);
 
           h3 {
-            font-family: $sans-serif;
+            font-family: $font-family-sans-serif;
             font-weight: 700;
             margin-bottom: ($baseline*0.75);
           }
@@ -451,7 +447,7 @@
         @include border-right(1px solid $border-color-2);
 
         color: $base-font-color;
-        font-family: $sans-serif;
+        font-family: $font-family-sans-serif;
         font-style: italic;
         font-weight: 700;
         display: inline-block;
@@ -575,7 +571,7 @@
 
           @include float(left);
 
-          font-family: $sans-serif;
+          font-family: $font-family-sans-serif;
         }
 
         .icon {
@@ -608,7 +604,7 @@
           margin: $baseline 0 ($baseline/2);
           font-size: 0.8em;
           color: $lighter-base-font-color;
-          font-family: $sans-serif;
+          font-family: $font-family-sans-serif;
         }
       }
     }

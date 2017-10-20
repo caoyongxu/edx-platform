@@ -108,7 +108,7 @@
               @include padding(($baseline/4) ($baseline/2));
 
               border-radius: ($baseline/4);
-              font-family: $sans-serif;
+              font-family: $font-family-sans-serif;
               color: $base-font-color;
 
               p {
@@ -127,7 +127,7 @@
 
                   // definitions for proctored exam attempt status indicators
                   .verified {
-                    color: $success-color;
+                    color: theme-color("success");
                   }
 
                   .rejected {
