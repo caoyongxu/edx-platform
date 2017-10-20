@@ -8,7 +8,7 @@ from config_models.models import ConfigurationModel
 
 EXPERIENCES = (
     (0, 'Recurring Nudge and Upgrade Reminder'),
-    (1, 'Course Updates and Upgrade Reminder'),
+    (1, 'Course Updates'),
 )
 
 
@@ -48,8 +48,5 @@ class ScheduleConfig(ConfigurationModel):
 
 
 class ScheduleExperience(models.Model):
-    schedule = models.ForeignKey(Schedule)
+    schedule = models.ForeignKey(Schedule, unique=True)
     experience = models.IntegerField(choices=EXPERIENCES, default=EXPERIENCES[0][0])
-
-    class Meta:
-        unique_together = (('schedule', 'experience'),)
