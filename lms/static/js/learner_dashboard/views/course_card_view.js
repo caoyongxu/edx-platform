@@ -38,13 +38,17 @@
                          this.enrollModel.urlRoot = this.urlModel.get('commerce_api_url');
                      }
                      this.context = options.context || {};
+                     this.grade = this.context.courseData.grades[this.model.get('course_run_key')];
+                     this.grade = this.grade * 100;
                      this.render();
                      this.listenTo(this.model, 'change', this.render);
                  },
 
                  render: function() {
                      var data = $.extend(this.model.toJSON(), {
-                         enrolled: this.context.enrolled || ''
+                         enrolled: this.context.enrolled || '',
+                         grade: this.grade,
+                         collection_status: this.context.collection_status || '',
                      });
                      HtmlUtils.setHtml(this.$el, this.tpl(data));
                      this.postRender();

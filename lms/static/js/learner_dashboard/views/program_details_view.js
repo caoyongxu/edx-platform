@@ -91,7 +91,7 @@
                              el: '.js-course-list-remaining',
                              childView: CourseCardView,
                              collection: this.remainingCourseCollection,
-                             context: this.options
+                             context: $.extend(this.options, {collection_status: 'remaining'})
                          }).render();
                      }
 
@@ -100,7 +100,7 @@
                              el: '.js-course-list-completed',
                              childView: CourseCardView,
                              collection: this.completedCourseCollection,
-                             context: this.options
+                             context: $.extend(this.options, {collection_status: 'completed'})
                          }).render();
                      }
 
@@ -110,7 +110,7 @@
                              el: '.js-course-list-in-progress',
                              childView: CourseCardView,
                              collection: this.inProgressCourseCollection,
-                             context: $.extend(this.options, {enrolled: gettext('Enrolled')})
+                             context: $.extend(this.options, {enrolled: gettext('Enrolled'), collection_status: 'in_progress'}),
                          }).render();
                      }
 
