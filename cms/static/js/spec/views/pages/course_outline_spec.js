@@ -55,7 +55,8 @@ define(['jquery', 'edx-ui-toolkit/js/utils/spec-helpers/ajax-helpers', 'common/j
                     },
                     user_partitions: [],
                     group_access: {},
-                    user_partition_info: {}
+                    user_partition_info: {},
+                    highlights: []
                 }, options, {child_info: {children: children}});
             };
 
